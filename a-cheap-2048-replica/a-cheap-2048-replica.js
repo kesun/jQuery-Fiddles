@@ -222,12 +222,10 @@ function moveRight(){
 
 $(document).ready(function(){
 	//init
-	/*
 	spawn();
 	spawn();
-	*/
 	
-	testSpawn();
+	//testSpawn();
 	
 	$(document).keydown(function(key) {
         switch(parseInt(key.which,10)) {
