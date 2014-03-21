@@ -35,7 +35,7 @@
 	margin-top: 200px;
 	width: 200px;
 	height: 0px;
-	background: transparent url(roll-in-out-caption-box-decor.png) top repeat-x;
+	background: transparent url(roll-in-out-caption-box-decor.png) top left repeat-x;
 }
 
 .boxCaptionContent {
