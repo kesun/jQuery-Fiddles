@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+#11 #12 #13 #14 #21 #22 #23 #24 #31 #32 #33 #34 #41 #42 #43 #44 #restart{}
+
+body {
+	background-color: #333;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 12px;
+	color: #FFF;
+	text-align: center;
+}
+
+a{
+	font-size: 12px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+
+a:active{
+	color: #F9C;
+}
+
+a:visited{
+	color: #FFF;
+}
+	
+.block {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	vertical-align: middle;
+	text-align: center;
+	line-height: 50px;
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	margin-bottom: 4px;
+	border-radius: 5px;
+}
+
+.blockWrapper {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	padding-top: 25px;
+	width: 464px;
+	height: 582px;
+	border-radius: 15px;
+	background-color: #165776;
+}
+
+.caption1{
+	margin: 15px;
+	color: #FFF;
+	font-size: 40px;
+	text-shadow: 2px 2px #333333;
+}
+
+.gameButton{
+	font-size: 16px;
+	font-weight: bold;
+	color: #FFF;
+	border: none;
+	outline: none;
+	text-shadow: 1px 1px #333;
+	vertical-align: central;
+	text-align: center;
+	background-color: #9C6CFF;
+	border-radius: 10px;
+	width: 150px;
+	height: 40px;
+	margin: auto;
+}
+
+.gameButton:hover{
+	background-color: #B12166;
+}
+
+.resultBox{
+	display: none;
+	position: absolute;
+	z-index: 5;
+	margin-left: 26px;
+	width: 412px;
+	height: 100px;
+	border-radius: 5px;
+	text-align: center;
+	background-image: url(resultboxbackground.png);
+}
+
+.resultText{
+	margin-top: 34px;;
+	vertical-align: central;
+	font-size: 22px;
+	text-shadow: 4px 4px #000000;
+	font-weight: bold;
+}
+
+.achievementBox{
+	background-image: url(resultboxbackground.png);
+	position: absolute;
+	margin-left: -200px;
+	margin-top: 100px;
+	display: inline-block;
+	opacity: 0;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	width: 400px;
+	height: auto;
+	font-size: 20px;
+	font-weight: bold;
+	vertical-align: central;
+	line-height: normal;
+	border-radius: 10px;
+}

@@ -5,14 +5,18 @@ var tempID;
 var change = 0;
 var numRow = 4;
 var numCol = 4;
-var emptySpace = 0;
+
+var winner = 0;
+var loser = 0;
+var alive = 0;
 
 function checkWinner(){
 	for(var i = 1; i <= numRow; i++){
 		for(var j = 1; j <= numCol; j++){
 			tempID = "#" + i + j;
+
 			if($(tempID).is(":empty")){
-				emptySpace = 1;
+				alive = 1;
 			}else if($(tempID).text() == "2048"){
 				return 1;
 			}
@@ -220,42 +224,40 @@ function moveRight(){
 	}
 }
 
+
 $(document).ready(function(){
 	//init
 	spawn();
 	spawn();
 	
 	//testSpawn();
-	
-	$(document).keydown(function(key) {
-        switch(parseInt(key.which,10)) {
-			// Left arrow key pressed
-			case 37:
-				moveLeft();
-				break;
-			// Up Arrow Pressed
-			case 38:
-		        moveUp();
-				break;
-			// Right Arrow Pressed
-			case 39:
-				moveRight();
-				break;
-			// Down Array Pressed
-			case 40:
-				moveDown();
-				break;
-		}
-		
-		if(checkWinner() == 1){
-			declareWinner();
-		}
-		
-		if(change == 1){
-			spawn();
-		}else if(emptySpace == 0){
-			declareLoser();
-		}
-		change = 0;
-	});
+	if(winner == 0 && loser == 0){
+		$(document).keydown(function(key) {
+	        switch(parseInt(key.which,10)) {
+				// Left arrow key pressed
+				case 37:
+					moveLeft();
+					break;
+				// Up Arrow Pressed
+				case 38:
+			        moveUp();
+					break;
+				// Right Arrow Pressed
+				case 39:
+					moveRight();
+					break;
+				// Down Array Pressed
+				case 40:
+					moveDown();
+					break;
+			}
+			
+			checkWinner();
+			
+			if(change == 1){
+				spawn();
+			}
+			change = 0;
+		});
+	}
 });
