@@ -5,7 +5,7 @@ $(document).ready(function () {
 	$('#pointT').mousedown(function () {
 		var linkLine = $('<div id="new-link-line"></div>').prependTo('.mainFrame');
 	
-		linkLine.css('height', $('#pointS').outerWidth())
+		linkLine.css
 			.css('top', $('#pointS').position().top + $('#pointS').outerWidth() / 2)
 			.css('left', $('#pointS').position().left + $('#pointS').outerHeight() / 2);
 	
