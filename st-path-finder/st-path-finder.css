@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	background-color:#503042;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	text-align:center;
+	color:#CCC;
+}
+
+.mainFrame{
+	position:absolute;
+	border-radius:20px;
+	width:800px;
+	height:600px;
+	top:50%;
+	left:50%;
+	margin-left:-400px;
+	margin-top:-300px;
+	background-color:#DFBDBD;
+	vertical-align:central;
+	text-align:center;
+}
+
+#pointS{
+	background-color:#F77;
+}
+
+#pointT{
+	background-color:#459FCF;
+}
+
+.vertex{
+    z-index:100;
+	position:relative;
+	display:table-cell;
+	border-radius:30px;
+	width:60px;
+	height:60px;
+	line-height:60px;
+	vertical-align:central;
+	font-size:24px;
+	font-weight:bold;
+	color:#FFF;
+}
+
+#new-link-line, #solid-link-line{
+    z-index:1;
+	position:absolute;
+	width:8px;
+	background-color:#333;
+	transform-origin:left top;
+	-webkit-transform-origin: left top;
+	-moz-transform-origin: left top;
+	-o-transform-origin: left top;
+	-ms-transform-origin: left top;
+}
+
+
+#origin-point{}

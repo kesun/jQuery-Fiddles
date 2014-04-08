@@ -401,13 +401,33 @@ $(document).ready(function(){
     */
 
     if(winner == 0 && loser == 0){
+        $(document).swipe({
+            swipe:function(event, direction, duration, fingerCount){
+                alive = 0
+                change = 0;
+                switch(direction) {
+                    case "left": moveLeft(); break;
+                    case "up": moveUp(); break;
+                    case "right": moveRight(); break;
+                    case "down": moveDown(); break;
+                }
+                if(change == 1){    // if a valid change of position occured
+                    spawn();
+                }
+                checkWinner();
+                if(winner == 1){
+                    freezeGame();
+                    declareWinner();
+                }else if(alive == 0){
+                    freezeGame();
+                    loser = 1;
+                    declareLoser();
+                }
+                }
+        });
         $(document).keydown(function(key) {
-
-            // test();
-
             alive = 0
             change = 0;
-
             switch(parseInt(key.which,10)) {
                 // Left arrow key pressed
                 case 37: moveLeft(); break;
@@ -418,13 +438,10 @@ $(document).ready(function(){
                 // Down Array Pressed
                 case 40: moveDown(); break;
             }
-
             if(change == 1){    // if a valid change of position occured
                 spawn();
             }
-
             checkWinner();
-
             if(winner == 1){
                 freezeGame();
                 declareWinner();
