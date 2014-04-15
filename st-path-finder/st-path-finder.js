@@ -5,6 +5,22 @@ $(document).ready(function () {
         containment: "parent",
         snap: true
     });
+    $(document).on ("click", ".edgeLengthBox", function(){
+        if($(this).is("div")){
+            var inputBox = $(this).prev();
+            $(this).hide()
+            inputBox.val($(this).text());
+            inputBox.focus();
+        }
+    });
+    $(document).on ("focusout", ".edgeLengthBox", function(){
+        if($(this).is("input")){
+            var divBox = $(this).next();
+            divBox.text($(this).val());
+            $(this).val('');
+            divBox.show();
+        }
+    });
 	$('.vertex').mousedown(function (event) {
         switch (event.which) {
             case 1: // move only
@@ -28,6 +44,7 @@ $(document).ready(function () {
                     if($('#new-link-line').css('top') != top || $('#new-link-line').css('left') != left){
                         angle += 180;
                         setRotation($('#new-link-line'), angle);
+                        setRotation($("#new-link-line").children($("input")), angle * -1);
                     }
                 }
                 if($(this).attr("id") == "pointS"){
@@ -42,11 +59,12 @@ $(document).ready(function () {
             case 3: // add node and line
                 //makeNodeLine();
                 if ($('#solid-link-line').length > 0 || $('#new-link-line').length > 0) break;
-                $('<div id="new-link-line"></div>').prependTo('.mainFrame');
+                $('<div id="new-link-line"><input type="text" class="edgeLengthBox"><div class="edgeLengthBox"></div></div>').prependTo('.mainFrame');
                 var lengthAngle;
                 if($(this).attr("id") == "pointS"){
                     lengthAngle = calclengthAngle($('#pointS'), $('#pointT'));
                     setRotation($('#new-link-line'), lengthAngle[1]);
+                    setRotation($("#new-link-line").children($("input")), lengthAngle[1] * -1);
                     $('#new-link-line')
                         .css('height', lengthAngle[0])
                         .css('top', $('#pointT').position().top + $('#pointT').outerWidth() / 2)
@@ -54,6 +72,7 @@ $(document).ready(function () {
                 }else{
                     lengthAngle = calclengthAngle($('#pointT'), $('#pointS'));
                     setRotation($('#new-link-line'), lengthAngle[1]);
+                    setRotation($("#new-link-line").children($("input")), lengthAngle[1] * -1);
                     $('#new-link-line')
                         .css('height', lengthAngle[0])
                         .css('top', $('#pointS').position().top + $('#pointS').outerWidth() / 2)
@@ -63,7 +82,6 @@ $(document).ready(function () {
         }
 		$(document).mousemove(linkMouseMoveEvent);
 
-		// Cancel on right click
 		$(document).bind('mouseup.link', function (event) {
 			confirmLine();
 		});
@@ -92,6 +110,7 @@ function linkMouseMoveEvent(event) {
 
         $('#new-link-line').css('height', length);
         setRotation($('#new-link-line'), angle);
+        setRotation($("#new-link-line").children($("input")), angle * -1);
     }
 }
 
