@@ -44,6 +44,16 @@ body{
 	color:#FFF;
 }
 
+#vertexGuide{
+	background-color: #FF0062;
+	z-index: 500;
+	border-radius: 15px;
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 15px;
+}
+
 #new-link-line, #solid-link-line{
     z-index:1;
 	position:absolute;
@@ -55,6 +65,5 @@ body{
 	-o-transform-origin: left top;
 	-ms-transform-origin: left top;
 }
-
 
 #origin-point{}
