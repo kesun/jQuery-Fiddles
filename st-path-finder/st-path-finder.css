@@ -30,6 +30,10 @@ body{
 	background-color:#459FCF;
 }
 
+#pointX{
+	background-color:#FFC56E;
+}
+
 .vertex{
     z-index:100;
 	position:relative;
