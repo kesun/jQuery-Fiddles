@@ -14,6 +14,12 @@ $(document).ready(function(){
 			$("#start").text("Start");
 		}
 	});
+	$("#reset").click(function(){
+		$("#start").text("Start");
+		reset();
+		makeAliveCells();
+		clearInterval(actionInterval);
+	});
 
 });
 
@@ -69,9 +75,11 @@ function reset(){
 				col = "0" + col;
 			}
 			var newCellID = "#" + row + col;
+			$(newCellID).css("background-color", deadColour)
+				.css("color", "#FF71FF")
+				.text("0");
 			//$(newCellID).css;
 		}
-		$('.mainFrame').append('<br/>');
 	}
 }
 
