@@ -1,3 +1,10 @@
+var IDs = [];
+var aliveColour = "#B40431";
+var deadColour = "rgba(0, 0, 0, 0)";
+var newbornColour = "#FF8000";
+var madeMove = 1;
+var genetationCounter = 0;
+
 $(document).ready(function(){
 	init();
 	//makeCluster1();
@@ -6,7 +13,18 @@ $(document).ready(function(){
 	var actionInterval;
 	$("#start").click(function(){
 		if($("#start").text() == "Start"){
-			actionInterval = setInterval(function(){start()}, 500);
+			actionInterval = setInterval(function(){
+				if(madeMove == 1){
+					start();
+					if(madeMove == 1){
+						genetationCounter++;
+					}
+					$(".counterInput").attr("value", genetationCounter);
+				}else{
+					clearInterval(actionInterval);
+					$("#start").text("Start");
+				}
+			}, 500);
 			//start();
 			$("#start").text("Stop");
 		}else{
@@ -15,22 +33,17 @@ $(document).ready(function(){
 		}
 	});
 	$("#reset").click(function(){
-		$("#start").text("Start");
-		reset();
-		makeAliveCells();
-		clearInterval(actionInterval);
+		stop(actionInterval);
 	});
+	if(madeMove == 0){
+		stop(actionInterval);
+	}
 
 });
 
 function test(value){
 	$('body').append(value);
 }
-
-var IDs = [];
-var aliveColour = "#B40431";
-var deadColour = "rgba(0, 0, 0, 0)";
-var newbornColour = "#FF8000";
 
 function makeCluster1(){
 	$("#0505").css("background-color", aliveColour);
@@ -61,6 +74,8 @@ function init(){
 		}
 		$('.mainFrame').append('<br/>');
 	}
+	$(".counterInput").attr("value", 0);
+	genetationCounter = 0;
 }
 
 function reset(){
@@ -81,6 +96,9 @@ function reset(){
 			//$(newCellID).css;
 		}
 	}
+	madeMove = 1;
+	$(".counterInput").attr("value", 0);
+	genetationCounter = 0;
 }
 
 function start(){
@@ -102,6 +120,7 @@ function start(){
 		curIndex++;
 	}
 	*/
+	madeMove = 0;
 	for(var i = 0; i < 20; i++){
 		var row = i.toString();
 		if(row.length < 2){
@@ -132,8 +151,11 @@ function start(){
 	}
 }
 
-function stop(){
-
+function stop(actionInterval){
+	$("#start").text("Start");
+	reset();
+	makeAliveCells();
+	clearInterval(actionInterval);
 }
 
 function getRandomInt(min, max) {
@@ -169,8 +191,8 @@ function checkCell(row, col, curID){ // Check the number of neighbours of a cell
 }
 
 function modifyCell(row, col){
-	var curID = "#" + row + col;
-	if($(curID).css("background-color") == deadColour){
+	var curID = "#" + row + col
+;	if($(curID).css("background-color") == deadColour){
 		modifyDeadCell(row, col, curID);
 	}else{
 		modifyAliveCell(row, col, curID);
@@ -183,6 +205,7 @@ function modifyAliveCell(row, col, curID){
 	if(numNeighbour < 2 || numNeighbour > 3){
 		$(curID).css("background-color", deadColour)
 			.css("color", "#FF71FF");
+		madeMove = 1;
 	}else{
 		$(curID).css("background-color", aliveColour)
 			.css("color", "#D23E81");
@@ -195,6 +218,7 @@ function modifyDeadCell(row, col, curID){
 	if(numNeighbour == 3){
 		$(curID).css("background-color", newbornColour)
 			.css("color", "#BB4600");
+		madeMove = 1;
 	}
 }
 function getNeighbours(row, col){
