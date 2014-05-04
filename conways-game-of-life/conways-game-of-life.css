@@ -5,6 +5,24 @@ body{
 	text-align: left;
 }
 
+a{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+a:visited{
+	color: #FFFFFF;
+}
+
+a:active{
+	color: #FFFFFF;
+}
+
 .outerFrame{
 	position: relative;
 	width: 820px;
@@ -75,6 +93,8 @@ body{
 	left: -355px;
 	width: 100px;
 	border: none;
+	background-color: #893C5D;
+	color: #FFFFFF;
 }
 
 .label{
@@ -94,4 +114,24 @@ body{
 
 #generationCounter{
 	top: 120px;
+}
+
+#initialBlocks{
+	top: 180px;
+	width: 180px;
+}
+
+.initialInput{
+	position: absolute;
+	top: 210px;
+	margin-left: 50%;
+	left: -355px;
+	width: 100px;
+	border: none;
+	background-color: #893C5D;
+	color: #FFFFFF;
+}
+
+#note{
+	top: 560px;
 }

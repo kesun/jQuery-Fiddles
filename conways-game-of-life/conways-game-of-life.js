@@ -4,6 +4,7 @@ var deadColour = "rgba(0, 0, 0, 0)";
 var newbornColour = "#FF8000";
 var madeMove = 1;
 var genetationCounter = 0;
+var numBlocks = 40;
 
 $(document).ready(function(){
 	init();
@@ -34,11 +35,19 @@ $(document).ready(function(){
 	});
 	$("#reset").click(function(){
 		stop(actionInterval);
+		numBlocks = $(".initialInput").val();
 	});
 	if(madeMove == 0){
 		stop(actionInterval);
 	}
-
+	$(".initialInput").focusout(function(){
+		var tempVal = Number($(".initialInput").val());
+		if(tempVal < 0 || tempVal > 400 || tempVal == ""){
+			alert("Please enter a number between 0 ~ 400 only.");
+			$(".initialInput").val(40);
+		}
+		numBlocks = Number($(".initialInput").val());
+	});
 });
 
 function test(value){
@@ -70,12 +79,14 @@ function init(){
 			}
 			var newCellID = row + col;
 			IDs.push(newCellID);
-			$('.mainFrame').append('<div class="cell" id="' + newCellID + '" style="background-color: ' + deadColour + '; color: #FF71FF">0</div>');
+			$('.mainFrame').append('<div class="cell" id="' + newCellID + '" style="background-color: ' + deadColour + '; color: #FF71FF"></div>');
 		}
 		$('.mainFrame').append('<br/>');
 	}
 	$(".counterInput").attr("value", 0);
 	genetationCounter = 0;
+	$(".initialInput").val(40);
+	numBlocks = $(".initialInput").val();
 }
 
 function reset(){
@@ -92,13 +103,14 @@ function reset(){
 			var newCellID = "#" + row + col;
 			$(newCellID).css("background-color", deadColour)
 				.css("color", "#FF71FF")
-				.text("0");
+				.attr("data-value", 0);
 			//$(newCellID).css;
 		}
 	}
 	madeMove = 1;
 	$(".counterInput").attr("value", 0);
 	genetationCounter = 0;
+	numBlocks = Number($(".initialInput").val());
 }
 
 function start(){
@@ -166,7 +178,7 @@ function makeAliveCells(){
 	var row;
 	var col;
 	var id;
-	var numCells = 40;
+	var numCells = numBlocks;
 	do{
 		row = getRandomInt(0, 19).toString();
 		col = getRandomInt(0, 19).toString();
@@ -187,7 +199,7 @@ function makeAliveCells(){
 
 function checkCell(row, col, curID){ // Check the number of neighbours of a cell
 	var numNeighbour = getNeighbours(row, col);
-	$(curID).text(numNeighbour);
+	$(curID).attr("data-value", numNeighbour);
 }
 
 function modifyCell(row, col){
@@ -201,7 +213,7 @@ function modifyCell(row, col){
 
 function modifyAliveCell(row, col, curID){
 	//test(curID + " is a live cell<br/>");
-	var numNeighbour = $(curID).text();
+	var numNeighbour = $(curID).attr("data-value");
 	if(numNeighbour < 2 || numNeighbour > 3){
 		$(curID).css("background-color", deadColour)
 			.css("color", "#FF71FF");
@@ -214,7 +226,7 @@ function modifyAliveCell(row, col, curID){
 
 function modifyDeadCell(row, col, curID){
 	//test(curID + " is a dead cell<br/>");
-	var numNeighbour = $(curID).text();
+	var numNeighbour = $(curID).attr("data-value");
 	if(numNeighbour == 3){
 		$(curID).css("background-color", newbornColour)
 			.css("color", "#BB4600");
