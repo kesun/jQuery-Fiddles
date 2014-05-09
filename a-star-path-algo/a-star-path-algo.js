@@ -151,7 +151,7 @@ function displayPath(pathNodes){
 // ====== Iterators =======
 function start(curNode){
 	if(areNodesEqual(curNode, dest)){
-		$(makeID(curNode)).css("background-color", "#EE8B00")
+		$(makeID(curNode)).css("background-color", "#EE8B00");
 		getPath(closedSet[closedSet.length - 1]);
 		return true;	// Path found
 	}
@@ -273,11 +273,11 @@ function findNeighbours(curNode){
 		newNode = makeNode(curNode, x - 1, y); // top
 		checkNeighbourNode(curNode, newNode, 0);
 	}
-	if(y < gridWidth){
+	if(y < gridWidth - 1){
 		newNode = makeNode(curNode, x, y + 1); // right
 		checkNeighbourNode(curNode, newNode, 0);
 	}
-	if(x < gridHeight){
+	if(x < gridHeight - 1){
 		newNode = makeNode(curNode, x + 1, y); // bottom
 		checkNeighbourNode(curNode, newNode, 0);
 	}
@@ -285,15 +285,15 @@ function findNeighbours(curNode){
 		newNode = makeNode(curNode, x - 1, y - 1); // top left
 		checkNeighbourNode(curNode, newNode, 1);
 	}
-	if(x < gridHeight && y > 0){
+	if(x < gridHeight - 1 && y > 0){
 		newNode = makeNode(curNode, x + 1, y - 1); // bottom left
 		checkNeighbourNode(curNode, newNode, 2);
 	}
-	if(x > 0 && y < gridWidth){
+	if(x > 0 && y < gridWidth - 1){
 		newNode = makeNode(curNode, x - 1, y + 1); // top right
 		checkNeighbourNode(curNode, newNode, 3);
 	}
-	if(x < gridHeight && y < gridWidth){
+	if(x < gridHeight - 1 && y < gridWidth - 1){
 		newNode = makeNode(curNode, x + 1, y + 1); // bottom right
 		checkNeighbourNode(curNode, newNode, 4);
 	}
@@ -372,6 +372,8 @@ function checkNeighbourNode(parent, node, mode){
 		animateNode(node, 1);
 	}else if(tempG < openSet[isInOpen].g){
 		openSet[isInOpen].g = tempG;
+		openSet[isInOpen].parentX = parent.x;
+		openSet[isInOpen].parentY = parent.y;
 	}
 	return true;
 }
