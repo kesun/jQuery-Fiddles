@@ -10,6 +10,7 @@ var pathColour = "#76C3D2";
 var wallColour = "#868686";
 
 // Global parameters
+var interval = 100;
 var wallNumber = 100;
 var gridWidth = 20;
 var gridHeight = 20;
@@ -113,7 +114,7 @@ function reset(){
 function getPath(finalNode){
 	var pathNodes = [];
 	var node = finalNode;
-	while(node.x != origin.x && node.y != origin.y){
+	while(node.x != origin.x || node.y != origin.y){
 		var parent = {
 			x : node.parentX,
 			y : node.parentY
@@ -127,7 +128,11 @@ function getPath(finalNode){
 			return 0;
 		}
 	}
-	pathNodes.push()
+	pathNodes.pop();
+	$('body').append("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
+	printSet(closedSet, 2);
+	$('body').append("<br>");
+	printSet(pathNodes, 2);
 	displayPath(pathNodes); // just use pop, it will be from origin to destination
 	return 1;
 }
@@ -139,7 +144,7 @@ function displayPath(pathNodes){
 	}
 	var node = path.pop();
 	animateNode(node, 3);
-	setTimeout(function(){displayPath(path)}, 500);
+	setTimeout(function(){displayPath(path)}, interval);
 }
 
 // NOTE: avoiding using loops to enable delay/animations when required
@@ -163,8 +168,8 @@ function start(curNode){
 		setTimeout(function(){
 			findNeighbours(closedSet[closedSet.length - 1]);
 			start(closedSet[closedSet.length - 1]);
-		}, 500);
-	}, 500);
+		}, interval);
+	}, interval);
 }
 
 // Find the node with the smallest f value in openSet
@@ -362,7 +367,7 @@ function checkNeighbourNode(parent, node, mode){
 	}
 	var tempG = parent.g + distance;
 	var isInOpen = isInSet(openSet, node);
-	if(isInOpen == -1){
+	if(isInOpen == -1){	// if node is not in openSet
 		openSet.push(node);
 		animateNode(node, 1);
 	}else if(tempG < openSet[isInOpen].g){
@@ -372,12 +377,19 @@ function checkNeighbourNode(parent, node, mode){
 }
 
 // ====== TESTS =======
-function printSet(set, mode){ // 0, coord only; 1, details
+function printSet(set, mode){ // 0, coord only; 1, details; 2, parent
 	$('body').append("SET contains " + set.length + " elements. <br>");
 	for(var i = 0; i < set.length; i++){
 		$('body').append("      " + makeID(set[i]));
-		if(mode == 1){
+		if(mode >= 1){
 			$('body').append(": g = " + set[i].g + ", h = " + set[i].h() + ", f = " + set[i].f());
+		}
+		if(mode >= 2){
+			if(set[i].parentX >= 0 && set[i].parentY >= 0){
+				$('body').append(" Parent node: " + set[i].parentX + ", " + set[i].parentY);
+			}else{
+				$('body').append(" No parent found");
+			}
 		}
 		$('body').append("<br>");
 	}
