@@ -36,6 +36,7 @@ var walls = [];
 
 // Helpers
 var helperNum;
+var pathSize;
 
 // ====== MAIN =======
 $(document).ready(function(){
@@ -54,6 +55,7 @@ $(document).ready(function(){
 		start(startNode);
 	});
 	$('#reset').click(function(){
+		$('#result').text("");
 		wallNumber = $(".initialInput").val();
 		reset();
 		generateInit();
@@ -138,10 +140,16 @@ function reset(){
 function getPath(finalNode){
 	var pathNodes = [];
 	var node = finalNode;
+	pathSize = 0;
 	while(node.x != origin.x || node.y != origin.y){
 		var parent = {
 			x : node.parentX,
 			y : node.parentY
+		}
+		if(Math.abs(parent.x - node.x) == 1 && Math.abs(parent.y - node.y) == 1){
+			pathSize += diagDistance;
+		}else{
+			pathSize += unitDistance;
 		}
 		var parentIndex = isInSet(closedSet, parent);
 		if(parentIndex >= 0){
@@ -160,6 +168,7 @@ function getPath(finalNode){
 function displayPath(pathNodes){
 	var path = pathNodes;
 	if(path.length == 0){
+		$('#result').text("Size of path: " + pathSize);
 		$('#reset').prop('disabled', false)
 			.css('background-color', liveButton);
 		return 0;
@@ -177,6 +186,8 @@ function start(curNode){
 		return true;	// Path found
 	}
 	if(openSet.length == 0){
+		$('#reset').prop('disabled', false)
+			.css('background-color', liveButton);
 		return false;	// Path not found
 	}
 	openIterator(0, 0);
