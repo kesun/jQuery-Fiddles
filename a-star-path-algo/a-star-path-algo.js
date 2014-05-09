@@ -186,6 +186,7 @@ function start(curNode){
 		return true;	// Path found
 	}
 	if(openSet.length == 0){
+		$('#result').text("A path is not found!");
 		$('#reset').prop('disabled', false)
 			.css('background-color', liveButton);
 		return false;	// Path not found
