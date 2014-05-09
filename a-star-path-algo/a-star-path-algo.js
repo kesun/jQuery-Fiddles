@@ -277,7 +277,7 @@ function animateNode(node, type){
 	}else if(type == 3){ // from closed to path
 		var pathThing; // insert HTML code of circle with closed background colour ******
 		var circ = $(id).append(pathThing);
-		circ.animate({backgroundColor : pathColour}, 'fast');
+		circ.animate({backgroundColor : pathColour}, 'slow');
 	}
 }
 
