@@ -1,5 +1,5 @@
 body{
-	background-color:#503042;
+	background-color:#001D29;
 	font-family:Verdana, Geneva, sans-serif;
 	font-size:12px;
 	text-align: left;
@@ -32,7 +32,7 @@ a:active{
 	left: 50%;
 	margin-left: -410px;
 	margin-top: -310px;
-	background-color: #3B0B24;
+	background-color: #003D57;
 }
 
 .mainFrame{
@@ -42,7 +42,7 @@ a:active{
 	margin-left: 200px;
 	top: 10px;
 	left: 10px;
-	background-color: #F5A9F2;
+	background-color: #E7D6EA;
 }
 
 .node{
@@ -65,7 +65,7 @@ a:active{
 	height: 30px;
 	border-radius: 5px;
 	border: none;
-	background-color: #503042;
+	background-color: #008CC9;
 	color: #FFFFFF;
 	vertical-align: center;
 	text-align: middle;
@@ -113,7 +113,7 @@ a:active{
 	left: -355px;
 	width: 100px;
 	border: none;
-	background-color: #893C5D;
+	background-color: #33718C;
 	color: #FFFFFF;
 }
 

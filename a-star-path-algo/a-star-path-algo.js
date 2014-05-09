@@ -3,11 +3,15 @@ var counter = 3;
 // =================
 
 // Colour codes
-var unexploredColour = "#3A383F";
-var openColour = "#54A200";
-var closedColour = "#294E6A";
-var pathColour = "#76C3D2";
+var unexploredColour = "transparent";
+var openColour = "#D56AFF";
+var closedColour = "#562E6E";
+var pathColour = "#FFFF7A";
 var wallColour = "#868686";
+var startColour = "#FF0095";
+var destColour = "#00ABFF";
+var greyButton = "#53707C";
+var liveButton = "#008CC9";
 
 // Global parameters
 var interval = 100;
@@ -36,12 +40,33 @@ var helperNum;
 // ====== MAIN =======
 $(document).ready(function(){
 	generateGrid();
+	$(".initialInput").val(100);
 	generateInit();
 	// Construct the starting position into a proper node
-	var startNode = makeNode(0, origin.x, origin.y);
-	closedSet.push(startNode);
-	findNeighbours(closedSet[closedSet.length - 1]);
-	start(startNode);
+	$('#start').click(function(){
+		$(this).prop('disabled', true)
+			.css('background-color', greyButton);
+		$('#reset').prop('disabled', true)
+			.css('background-color', greyButton);
+		var startNode = makeNode(0, origin.x, origin.y);
+		closedSet.push(startNode);
+		findNeighbours(closedSet[closedSet.length - 1]);
+		start(startNode);
+	});
+	$('#reset').click(function(){
+		wallNumber = $(".initialInput").val();
+		reset();
+		generateInit();
+		$('#start').prop('disabled', false)
+			.css('background-color', liveButton);
+	});
+	$(".initialInput").focusout(function(){
+		var tempVal = Number($(".initialInput").val());
+		if(tempVal < 0 || tempVal > 398 || tempVal == ""){
+			alert("Please enter a number between 0 ~ 398 only.");
+			$(".initialInput").val(100);
+		}
+	});
 });
 
 function generateGrid(){
@@ -62,6 +87,7 @@ function generateGrid(){
 function generateInit(){
 	var wX;
 	var wY;
+	wallNumber = Number($(".initialInput").val());
 	for(var i = 0; i < wallNumber + 2; i++){
 		wX = getRandomInt(0, gridWidth - 1);
 		wY = getRandomInt(0, gridHeight - 1);
@@ -76,14 +102,12 @@ function generateInit(){
 			}else if(wallNumber - i == 0){
 				origin.x = wX;
 				origin.y = wY;
-				$('body').append("starting node @ " + wX + ", " + wY + "<br>");
-				$(makeID(node)).css("background-color", "#FF0055")
+				$(makeID(node)).css("background-color", startColour)
 					.text("");
-			}else if(start.x != wX || start.y != wY){
+			}else if(origin.x != wX || origin.y != wY){
 				dest.x = wX;
 				dest.y = wY;
-				$('body').append("ending node @ " + wX + ", " + wY + "<br>");
-				$(makeID(node)).css("background-color", "#EE8B00")
+				$(makeID(node)).css("background-color", destColour)
 					.text("");
 			}else{
 				i--;
@@ -129,10 +153,6 @@ function getPath(finalNode){
 		}
 	}
 	pathNodes.pop();
-	$('body').append("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
-	printSet(closedSet, 2);
-	$('body').append("<br>");
-	printSet(pathNodes, 2);
 	displayPath(pathNodes); // just use pop, it will be from origin to destination
 	return 1;
 }
@@ -140,6 +160,8 @@ function getPath(finalNode){
 function displayPath(pathNodes){
 	var path = pathNodes;
 	if(path.length == 0){
+		$('#reset').prop('disabled', false)
+			.css('background-color', liveButton);
 		return 0;
 	}
 	var node = path.pop();
@@ -151,7 +173,6 @@ function displayPath(pathNodes){
 // ====== Iterators =======
 function start(curNode){
 	if(areNodesEqual(curNode, dest)){
-		$(makeID(curNode)).css("background-color", "#EE8B00");
 		getPath(closedSet[closedSet.length - 1]);
 		return true;	// Path found
 	}
@@ -249,6 +270,9 @@ function isInSet(set, node){
 
 function animateNode(node, type){
 	var id = makeID(node);
+	if(areNodesEqual(dest, node)){
+		return 0;
+	}
 	if(type == 1){ // from unexplored to open
 		$(id).animate({backgroundColor : openColour}, 'slow');
 	}else if(type == 2){ // from open to closed
