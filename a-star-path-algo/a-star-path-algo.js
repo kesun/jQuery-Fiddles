@@ -15,9 +15,9 @@ var liveButton = "#008CC9";
 
 // Global parameters
 var interval = 100;
-var wallNumber = 100;
-var gridWidth = 20;
-var gridHeight = 20;
+var wallNumber = 500;
+var gridWidth = 60;
+var gridHeight = 60;
 var unitDistance = 10;
 var diagDistance = 14;
 var origin = {
@@ -41,7 +41,7 @@ var pathSize;
 // ====== MAIN =======
 $(document).ready(function(){
 	generateGrid();
-	$(".initialInput").val(100);
+	$(".initialInput").val(500);
 	generateInit();
 	// Construct the starting position into a proper node
 	$('#start').click(function(){
@@ -64,9 +64,9 @@ $(document).ready(function(){
 	});
 	$(".initialInput").focusout(function(){
 		var tempVal = Number($(".initialInput").val());
-		if(tempVal < 0 || tempVal > 398 || tempVal == ""){
+		if(tempVal < 0 || tempVal > 3598 || tempVal == ""){
 			alert("Please enter a number between 0 ~ 398 only.");
-			$(".initialInput").val(100);
+			$(".initialInput").val(500);
 		}
 	});
 });
