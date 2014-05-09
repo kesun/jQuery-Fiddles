@@ -191,9 +191,7 @@ function start(curNode){
 			.css('background-color', liveButton);
 		return false;	// Path not found
 	}
-	openIterator(0, 0);
-	closedSet.push(openSet[helperNum]);
-	openSet.splice(helperNum, 1);
+	closedSet.push(openSet.pop());
 	setTimeout(function(){
 		var len = closedSet.length;
 		len--;
@@ -203,19 +201,6 @@ function start(curNode){
 			start(closedSet[closedSet.length - 1]);
 		}, interval);
 	}, interval);
-}
-
-// Find the node with the smallest f value in openSet
-function openIterator(i, smallestIndex){
-	if(i == openSet.length){
-		helperNum = smallestIndex;
-		return 0;
-	}
-	if(openSet[i].f() < openSet[smallestIndex].f()){
-		openIterator(i + 1, i);
-	}else{
-		openIterator(i + 1, smallestIndex);
-	}
 }
 
 // ====== Helpers =======
@@ -404,7 +389,12 @@ function checkNeighbourNode(parent, node, mode){
 	var tempG = parent.g + distance;
 	var isInOpen = isInSet(openSet, node);
 	if(isInOpen == -1){	// if node is not in openSet
-		openSet.push(node);
+		// openSet.push(node);
+		if(openSet.length == 0){
+			openSet.push(node);
+		}else{
+			insertToOpen(0, openSet.length - 1, node);
+		}
 		animateNode(node, 1);
 	}else if(tempG < openSet[isInOpen].g){
 		openSet[isInOpen].g = tempG;
@@ -412,6 +402,25 @@ function checkNeighbourNode(parent, node, mode){
 		openSet[isInOpen].parentY = parent.y;
 	}
 	return true;
+}
+
+function insertToOpen(min, max, node){
+	var curF = node.f();
+	var maxF = openSet[min].f();
+	var minF = openSet[max].f();
+	var mid = min + Math.round((max - min) / 2);
+	var midF = openSet[mid].f();
+	if(curF <= minF){
+		openSet.splice(max + 1, 0, node);
+	}else if(curF >= maxF){
+		openSet.splice(min, 0, node);
+	}else if(curF == midF){
+		openSet.splice(mid, 0, node);
+	}else if(curF < midF){
+		insertToOpen(mid + 1, max - 1, node);
+	}else{
+		insertToOpen(min + 1, mid - 1, node);
+	}
 }
 
 // ====== TESTS =======
