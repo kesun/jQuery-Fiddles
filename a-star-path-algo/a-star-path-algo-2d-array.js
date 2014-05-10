@@ -28,11 +28,12 @@ var dest = {
 	x : 0,
 	y : 0
 };
+var openSetCoord;
+var openCounter;
+var closedCounter;
 
-// Node sets
-var closedSet = [];
-var openSet = [];
-var walls = [];
+// Le grid
+var grid;
 
 // Helpers
 var helperNum;
@@ -50,7 +51,9 @@ $(document).ready(function(){
 		$('#reset').prop('disabled', true)
 			.css('background-color', greyButton);
 		var startNode = makeNode(0, origin.x, origin.y);
-		closedSet.push(startNode);
+		startNode.group = 2;
+		closedCounter++;
+		grid[origin.x][origin.y] = startNode;
 		findNeighbours(closedSet[closedSet.length - 1]);
 		start(startNode);
 	});
@@ -65,7 +68,7 @@ $(document).ready(function(){
 	$(".initialInput").focusout(function(){
 		var tempVal = Number($(".initialInput").val());
 		if(tempVal < 0 || tempVal > 3598 || tempVal == ""){
-			alert("Please enter a number between 0 ~ 3598 only.");
+			alert("Please enter a number between 0 ~ 398 only.");
 			$(".initialInput").val(500);
 		}
 	});
@@ -89,6 +92,16 @@ function generateGrid(){
 function generateInit(){
 	var wX;
 	var wY;
+	openCounter = 0;
+	closedCounter = 0;
+	openSetCoord = [];
+	grid = new Array(gridHeight);
+	for(var i = 0; i < gridHeight; i++){
+		grid[i] = new Array(gridWidth);
+		for(var j = 0; j < gridWidth; j++){
+			grid[i][j] = 0;
+		}
+	}
 	wallNumber = Number($(".initialInput").val());
 	for(var i = 0; i < wallNumber + 2; i++){
 		wX = getRandomInt(0, gridWidth - 1);
@@ -97,9 +110,9 @@ function generateInit(){
 			x : wX,
 			y : wY
 		}
-		if(isInSet(walls, node) == -1){
+		if(grid[wX][wY] == 0){
 			if(i < wallNumber){
-				walls.push(node);
+				grid[wX][wY] = -1;
 				$(makeID(node)).css("background-color", wallColour);
 			}else if(wallNumber - i == 0){
 				origin.x = wX;
@@ -131,9 +144,7 @@ function reset(){
 				.empty();
 		}
 	}
-	closedSet = [];
-	openSet = [];
-	walls = [];
+	grid = [];
 }
 
 // Construct the final path
@@ -151,10 +162,10 @@ function getPath(finalNode){
 		}else{
 			pathSize += unitDistance;
 		}
-		var parentIndex = isInSet(closedSet, parent);
-		if(parentIndex >= 0){
-			pathNodes.push(closedSet[parentIndex]);
-			node = closedSet[parentIndex];
+		//var parentIndex = isInSet(closedSet, parent);
+		if(grid[parent.x][parent.y] > 0 && grid[parent.x][parent.y].group == 2){
+			pathNodes.push(grid[parent.x][parent.y]);
+			node = grid[parent.x][parent.y];
 		}else{
 			alert("Somethin went wrong while constructing the final path.");
 			return 0;
@@ -182,10 +193,10 @@ function displayPath(pathNodes){
 // ====== Iterators =======
 function start(curNode){
 	if(areNodesEqual(curNode, dest)){
-		getPath(closedSet[closedSet.length - 1]);
+		getPath(curNode);
 		return true;	// Path found
 	}
-	if(openSet.length == 0){
+	if(openCounter == 0){
 		$('#result').text("A path is not found!");
 		$('#reset').prop('disabled', false)
 			.css('background-color', liveButton);
@@ -204,6 +215,10 @@ function start(curNode){
 }
 
 // ====== Helpers =======
+function findSmallestOpen(){
+	for(var i = 0; i < openCounter;)
+}
+
 function makeNode(parentNode, curX, curY){
 	var node = {
 		x : curX,
@@ -212,7 +227,8 @@ function makeNode(parentNode, curX, curY){
 		h : function(){return hEstimate(this.x, this.y)},
 		f : function(){return this.g + this.h()},
 		parentX : 0,
-		parentY : 0
+		parentY : 0,
+		group : 0
 	}
 	if(parentNode != 0){
 		node.parentX = parentNode.x;
@@ -253,16 +269,6 @@ function areNodesEqual(node1, node2){
 		return true;
 	}
 	return false;
-}
-
-function isInSet(set, node){
-	for(var i = 0; i < set.length; i++){
-		var tempNode = set[i];
-		if(tempNode.x == node.x && tempNode.y == node.y){
-			return i;
-		}
-	}
-	return -1;
 }
 
 function animateNode(node, type){
@@ -322,7 +328,7 @@ function findNeighbours(curNode){
 
 // Check validity of each neighbouring node and keep the openSet updated
 function checkNeighbourNode(parent, node, mode){
-	if(isInSet(closedSet, node) >= 0 || isInSet(walls, node) >= 0){
+	if((grid[node.x][node.y] > 0 && grid[node.x][node.y].group == 2) || grid[node.x][node.y] == -1){
 		return false;
 	}
 	var distance;
@@ -341,7 +347,7 @@ function checkNeighbourNode(parent, node, mode){
 					x : node.x + 1,
 					y : node.y
 				}
-				if(isInSet(walls, n1) != -1 || isInSet(walls, n2) != -1){
+				if(grid[n1.x][n1.y] != -1 || grid[n2.x][n2.y] != -1){
 					return false;
 				}
 				break;
@@ -354,7 +360,7 @@ function checkNeighbourNode(parent, node, mode){
 					x : node.x,
 					y : node.y + 1
 				}
-				if(isInSet(walls, n1) != -1 || isInSet(walls, n2) != -1){
+				if(grid[n1.x][n1.y] != -1 || grid[n2.x][n2.y] != -1){
 					return false;
 				}
 				break;
@@ -367,7 +373,7 @@ function checkNeighbourNode(parent, node, mode){
 					x : node.x + 1,
 					y : node.y
 				}
-				if(isInSet(walls, n1) != -1 || isInSet(walls, n2) != -1){
+				if(grid[n1.x][n1.y] != -1 || grid[n2.x][n2.y] != -1){
 					return false;
 				}
 				break;
@@ -380,47 +386,26 @@ function checkNeighbourNode(parent, node, mode){
 					x : node.x,
 					y : node.y - 1
 				}
-				if(isInSet(walls, n1) != -1 || isInSet(walls, n2) != -1){
+				if(grid[n1.x][n1.y] != -1 || grid[n2.x][n2.y] != -1){
 					return false;
 				}
 				break;
 		}
 	}
 	var tempG = parent.g + distance;
-	var isInOpen = isInSet(openSet, node);
-	if(isInOpen == -1){	// if node is not in openSet
+	var isInOpen = grid[node.x][node.y];
+	if(isInOpen > 0 && isInOpen.group != 1){	// if node is not in openSet
 		// openSet.push(node);
-		if(openSet.length == 0){
-			openSet.push(node);
-		}else{
-			insertToOpen(0, openSet.length - 1, node);
-		}
+		grid[node.x][node.y].group = 1;
+		openCounter++;
+		openSetCoord.push(node);
 		animateNode(node, 1);
-	}else if(tempG < openSet[isInOpen].g){
-		openSet[isInOpen].g = tempG;
-		openSet[isInOpen].parentX = parent.x;
-		openSet[isInOpen].parentY = parent.y;
+	}else if(tempG < isInOpen.g){
+		grid[node.x][node.y].g = tempG;
+		grid[node.x][node.y].parentX = parent.x;
+		grid[node.x][node.y].parentY = parent.y;
 	}
 	return true;
-}
-
-function insertToOpen(min, max, node){
-	var curF = node.f();
-	var maxF = openSet[min].f();
-	var minF = openSet[max].f();
-	var mid = min + Math.round((max - min) / 2);
-	var midF = openSet[mid].f();
-	if(curF <= minF){
-		openSet.splice(max + 1, 0, node);
-	}else if(curF >= maxF){
-		openSet.splice(min, 0, node);
-	}else if(curF == midF){
-		openSet.splice(mid, 0, node);
-	}else if(curF < midF){
-		insertToOpen(mid + 1, max - 1, node);
-	}else{
-		insertToOpen(min + 1, mid - 1, node);
-	}
 }
 
 // ====== TESTS =======
