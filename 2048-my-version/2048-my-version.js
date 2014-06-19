@@ -8,6 +8,7 @@ var numCol = 4;
 var alive = 0;
 var winner = 0;
 var loser = 0;
+var winnerBlock = 0;
 
 //Numbers achieved
 var seenValues = [2];
@@ -98,6 +99,7 @@ function checkWinner(){ // returns 1 if there's winner, 0 if not (doesn't mean l
                 $(temp)
                     .css("background-image", "url(redstar.png)")
                     .css("color", "#ffffff");
+                winnerBlock = temp;
                 return 1;
 
             }else{  // if block is filled with non-2048 (implicitly less than 2048)
@@ -377,7 +379,10 @@ function init(){
         }
     }
     numRow = 4; numCol = 4; winner = 0; loser = 0; alive = 0; seenValues = [2]; // reset global
-
+    if(winnerBlock != 0){
+        $(winnerBlock).css('background-image', '');
+        winnerBlock = 0;
+    }
     spawn();
     spawn();
 }
