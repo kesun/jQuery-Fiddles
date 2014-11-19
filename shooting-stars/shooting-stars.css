@@ -1,0 +1,138 @@
+body{
+  background-color:#503042;
+  font-family:Verdana, Geneva, sans-serif;
+  font-size:12px;
+  text-align: left;
+}
+
+a{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
+a:visited{
+  color: #FFFFFF;
+}
+
+a:active{
+  color: #FFFFFF;
+}
+
+.outerFrame{
+  position: relative;
+  width: 820px;
+  height: 620px;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  margin-left: -410px;
+  margin-top: -310px;
+  background-color: #3B0B24;
+}
+
+.mainFrame{
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  margin-left: 200px;
+  top: 10px;
+  left: 10px;
+  background-color: #F5A9F2;
+}
+
+.cell{
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  vertical-align: center;
+  line-height: 30px;
+  text-align: center;
+}
+
+.button{
+  display: inline-block;
+  position: absolute;
+  margin-left: 50%;
+  left: -345px;
+  width: 80px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #503042;
+  color: #FFFFFF;
+  vertical-align: center;
+  text-align: middle;
+  line-height: 30px;
+}
+
+#start{
+  top: 10px;
+}
+
+#reset{
+  top: 50px;
+}
+
+#blockSet{
+  top: 90px;
+  width: 100px;
+  left: -355px;
+}
+
+.counterInput{
+  position: absolute;
+  top: 150px;
+  margin-left: 50%;
+  left: -355px;
+  width: 100px;
+  border: none;
+  background-color: #893C5D;
+  color: #FFFFFF;
+}
+
+.label{
+  position: absolute;
+  display: inline-block;
+  color: #FFFFFF;
+  margin-left: 50%;
+  left: -400px;
+  width: 120px;
+  height: 30px;
+  border: none;
+  background-color: transparent;
+  vertical-align: center;
+  text-align: left;
+  line-height: 30px;
+}
+
+#generationCounter{
+  top: 120px;
+}
+
+#initialBlocks{
+  top: 180px;
+  width: 180px;
+}
+
+.initialInput{
+  position: absolute;
+  top: 210px;
+  margin-left: 50%;
+  left: -355px;
+  width: 100px;
+  border: none;
+  background-color: #893C5D;
+  color: #FFFFFF;
+}
+
+#note{
+  top: 445px;
+  width: 190px;
+}
