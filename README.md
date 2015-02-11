@@ -1,7 +1,7 @@
 jQuery Fiddles (more like JavaScript fiddles...)
 ==
 
-This is just a collection of my random JS fiddles. All written independently with the help of awesome plugins such as jQuery.
+This is just a collection of some fun JS fiddles. All written independently with the help of awesome plugins such as jQuery.
 
 
 ## Here is a list of complete-ish fiddles that are worth a look:
