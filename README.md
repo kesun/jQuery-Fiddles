@@ -14,8 +14,9 @@ This is just a collection of some fun JS fiddles. All written independently with
 ## Functional prototyping / others:
 
 * [Testing mobile friendliness](http://konishi.graphics/marco/)<br>
-* [Functional prototype of a music player (for a interview)](http://konishi.graphics/mp/)<br>
-* [Slideshow, 4 images infinitely scrolling to the left every 8 seconds (for a interview)](http://konishi.graphics/slideshow/)<br>
+* [Functional prototype of a music player (for an interview)](http://konishi.graphics/mp/)<br>
+* [Slideshow, 4 images infinitely scrolling to the left every 8 seconds (for an interview)](http://konishi.graphics/slideshow/)<br>
+* [Simple database with transaction (for an interview)](https://gist.github.com/kesun/e16389d5b20497249f74)<br>
 
 
 More goodness will come soon! ♥
