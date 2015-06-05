@@ -14,6 +14,7 @@ This is just a collection of some fun JS fiddles. All written independently with
 ## Functional prototyping / others:
 
 * [Testing mobile friendliness](http://konishi.graphics/marco/)<br>
+* [A hilariously broken unicorn spewing rainbow bullets (AWD control, left mouse click to shoot)[http://kesun.github.io/temp/temp.html]
 * [Functional prototype of a music player (for an interview)](http://konishi.graphics/mp/)<br>
 * [Slideshow, 4 images infinitely scrolling to the left every 8 seconds (for an interview)](http://konishi.graphics/slideshow/)<br>
 * [Simple database with transaction (for an interview)](https://gist.github.com/kesun/e16389d5b20497249f74)<br>
